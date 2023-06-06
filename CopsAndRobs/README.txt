@@ -10,3 +10,5 @@ Comments:
  1. The robber moves automatically . 
 2. The user responsible for moving the cop's in the board. 
 
+TO RUN THE CODE, DOWNLOAD THE WHOLE REPOSITORY AND RUN THE .sln FILE
+NOTE THAT YOU NEED A VERSION OF VISUAL STUDIO.
