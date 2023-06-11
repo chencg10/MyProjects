@@ -1,5 +1,5 @@
 /*********************************************
-Avidan Menashe
+Chen Cohen Gershon
 Cops and Robbers game+
 ************************************************/
 #include "Header.h"
