@@ -13,8 +13,8 @@
 	
 	LastLoc dw 2000d				;starting location of 'O'
 	Xlocation dw 0					;save the current location of 'X'
-	score dw 0						;a var to save the current score of the user
-	endOfGame_msg db 'Score:__$'	;msg for printing the score
+	score dw 0					;a var to save the current score of the user
+	endOfGame_msg db 'Score:__$'			;msg for printing the score
 	INT1C_counter dw 0d				;counter for the new int 1ch
 	lastKey db 0					;saves last key that was pressed
 	
@@ -30,16 +30,16 @@
 
 paintTheScreen proc near uses cx bx es ax
 	
-	mov bx, 0h						;set bx to the start of screen
-	mov cx, 80h*25h				;counter for painting each pixel in screen
+	mov bx, 0h					;set bx to the start of screen
+	mov cx, 80h*25h					;counter for painting each pixel in screen
 	
 
-	mov ax, 0b800h				;setting screen offset
+	mov ax, 0b800h					;setting screen offset
 	mov es, ax
 	mov ax, 20h					;set ax to space on a black backround
 
 continueToNext:	
-	mov es:[bx] , ax			;print spce
+	mov es:[bx] , ax				;print white space
 	add bx, 2					;move bx to next position 
 	sub cx, 2					; update loop counter
 	cmp cx, 0					; check if we in the end of the screen
@@ -47,8 +47,8 @@ continueToNext:
 	
 	;print 'O' =4fh
 	
-	mov ax, 044fh 				;set ax to a red 'O' on a black backround
-	mov bx, 2000d				;new screen offset
+	mov ax, 044fh 					;set ax to a red 'O' on a black backround
+	mov bx, 2000d					;new screen offset
 	mov es:[bx], ax
 	
 ret
@@ -106,8 +106,8 @@ DetectAWSD proc near uses bx ax dx es si
 		
 
 	Apressed:
-		mov lastKey, al				;save last key scan code in case the user will tap invaild key
-		mov cx, 160d				;set cx to the length of a row
+		mov lastKey, al					;save last key scan code in case the user will tap invaild key 
+		mov cx, 160d					;set cx to the length of a row
 		mov dx, 0					;reset dx
 		mov ax, bx					;set ax to bx
 		div cx 						;divide the current pos in 160 to check if we ar in the left end of the row
@@ -115,36 +115,37 @@ DetectAWSD proc near uses bx ax dx es si
 		jz finish					;we stay in place if dx == 0				
 		
 		;if not
-		mov ax, 0b800h				;setting screen offset
+		mov ax, 0b800h					;setting screen offset
 		mov es, ax
 		mov ax, 20h					;set ax to space on a black backround 	
-		mov es:[bx] , ax			;print space in last location
+		mov es:[bx] , ax				;print space in last location
 		sub bx, 2 					;move one position left
-		mov ax, 044fh 				; set ax to red 'O'
-		mov es:[bx], ax				; print 'O' in new position							
-		mov [LastLoc], bx			;update the location
+		mov ax, 044fh 					; set ax to red 'O'
+		mov es:[bx], ax					; print 'O' in new position							
+		mov [LastLoc], bx				;update the location
 		jmp finish
 		
 		
 	Dpressed:
-		mov lastKey, al				;save last key scan code in case the user will tap invaild key
-		mov cx, 160d				;set cx to the length of a row
+		mov lastKey, al					;save last key scan code in case the user will tap invaild key
+		mov cx, 160d					;set cx to the length of a row
 		mov dx, 0					;reset dx
 		mov ax, bx					;set ax to the current position
-		add ax, 2					;inc the current pos by 2 (one place on screen is 2 bytes) so the current pos will be a mult of 160d and then we know if we are the the edge
+		add ax, 2					;inc the current pos by 2 (one place on screen is 2 bytes) so the current pos will be a mult of 160d and then
+								;we know if we are the the edge
 		div cx 						;divide the current pos in 160 to check if we ar in the left end of the row
 		cmp dx,0 					;check if the reminder is zero, thats mean that we are in the left end
 		jz finish					;we stay in place if dx == 0				
 		
 		;if not
-		mov ax, 0b800h				;setting screen offset
+		mov ax, 0b800h					;setting screen offset
 		mov es, ax
 		mov ax, 20h					;set ax to space on a black backround 	
-		mov es:[bx] , ax			;print space in last location
+		mov es:[bx] , ax				;print space in last location
 		add bx, 2 					;move one position left
-		mov ax, 044fh 				; set ax to red 'O'
-		mov es:[bx], ax				; print 'O' in new position							
-		mov [LastLoc], bx			;update the location
+		mov ax, 044fh 					; set ax to red 'O'
+		mov es:[bx], ax					; print 'O' in new position							
+		mov [LastLoc], bx				;update the location
 		
 		jmp finish
 
@@ -175,7 +176,7 @@ DetectAWSD proc near uses bx ax dx es si
 		;else
 		mov ax, 0b800h				;screen offset
 		mov es, ax
-		mov ax, 20h					;set ax to space on a black backround 	
+		mov ax, 20h				;set ax to space on a black backround 	
 		mov es:[bx] , ax			;print space in last location
 		add bx, 160d 				;move one position down
 		mov ax, 044fh 				; set ax to red 'O'
@@ -186,14 +187,14 @@ DetectAWSD proc near uses bx ax dx es si
 		
 finish:
 
-	cmp bx,[Xlocation]			;we check if the 'O' and the 'X' are in the same location
-	jz CreateNewTarget			;if they are we jump to lable "CreateNewTarget"
-	jmp O_didnt_eat_X			;if they dont, we return 
+	cmp bx,[Xlocation]				;we check if the 'O' and the 'X' are in the same location
+	jz CreateNewTarget				;if they are we jump to lable "CreateNewTarget"
+	jmp O_didnt_eat_X				;if they dont, we return 
 
 
 CreateNewTarget:
 
-	call CreateXonScreen			;we call the function the randomliy create a new 'X' on the screen
+	call CreateXonScreen				;we call the function the randomliy create a new 'X' on the screen
 	mov si,offset score				;si now points on the current players score value
 	add ds:[si], 1					;inc the score by 1 because the player got the 'X' 
 			
@@ -262,7 +263,7 @@ Fix_X_location proc near uses cx si ax dx
 								
 	
 	mov ax, bx							;set ax to the clock value
-	mov si, 2000d						;we divide ax by mod2000 because the reminder can only be between 0-1999 
+	mov si, 2000d							;we divide ax by mod2000 because the reminder can only be between 0-1999 
 										;and this will give us a vaild screen offset
 	
 	div si								; currentXposition / 2000
@@ -349,7 +350,7 @@ ISR_new_INT_1Ch proc far
 	cmp INT1C_counter,3		;check if counter == 3 ?
 	jnz RepeatCount			;if taken, we inc the counter
 	
-	mov INT1C_counter, 0	;if counter == 3, set it to 0 for next count
+	mov INT1C_counter, 0		;if counter == 3, set it to 0 for next count
 	call DetectAWSD			;counter is 3 so we can move the player now
 	jmp continueINT			;now we dont inc the counter, we just want to call int 80h
 	
