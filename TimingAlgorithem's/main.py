@@ -1,6 +1,5 @@
 # Author : Chen Cohen Gershon
-# Date : 2018-12-01
-# Operating systems - HW3
+# Operating systems - Mac OS
 # Description : This code reads from an input file and simulates an OS-Timer
 # our code will calculate the TurnAround time for each Timeing-protocol
 import sys
