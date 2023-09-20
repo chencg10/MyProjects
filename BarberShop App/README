@@ -1,0 +1,12 @@
+This is the code of a BarberShop system written in java.
+The code lunches a GUI interface using the pictures in the different folders, make sure that the path of the photos is correct(you can check in the GUI package code)
+The main code is located in BarberShopHomePageGUI.java
+
+
+This project is in collaboration with :
+Avidan Menashe
+Hadas Yosef-Zada
+Shoam Galili
+
+
+Enjoy
