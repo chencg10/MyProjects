@@ -1,0 +1,6 @@
+In This project, I have created a net of 1 neuron that calculates the XOR function between 2 bits.
+The Model is implemented using numpy only (no Pytorch)
+
+
+Enjoy!
+Chen
